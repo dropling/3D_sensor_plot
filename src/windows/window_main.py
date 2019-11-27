@@ -40,15 +40,21 @@ class Main_window(tk.Tk):
         # File menu
         filemenu = tk.Menu(menu)
         menu.add_cascade(label="File", menu=filemenu)
-        filemenu.add_command(label="New", command=lambda: self.callback())
-        filemenu.add_command(label="Open File", command=lambda: self.callback())
+        filemenu.add_command(label="New File - Room", command=lambda: self.callback())
+        filemenu.add_command(label="Open File - Room", command=lambda: self.callback())
         filemenu.add_separator()
         filemenu.add_command(label="Exit", command=lambda: self.exit())
+        self.file_room_open = None
         # Sensor menu
         sensormenu = tk.Menu(menu)
         menu.add_cascade(label="Sensors", menu=sensormenu)
+        sensormenu.add_command(label="New File - Sensors", command=lambda: self.callback())
+        sensormenu.add_command(label="Open File - Sensors", command=lambda: self.callback())
+        sensormenu.add_command(label="Save Sensors", command=lambda: self.callback())
+        sensormenu.add_separator()
         sensormenu.add_command(label="New Sensor", command=lambda: self.window_open_new_sensor())
         sensormenu.add_command(label="Delete Sensor", command=lambda: self.callback())
+        self.file_sensors_open = None
         # Help menu
         helpmenu = tk.Menu(menu)
         menu.add_cascade(label="Help", menu=helpmenu)
