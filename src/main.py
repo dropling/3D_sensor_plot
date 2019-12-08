@@ -1,7 +1,7 @@
 import tkinter as tk
 import threading
 
-from windows.window_main import Main_window
+from window_main import Main_window
 
 if __name__ == '__main__':
     root = Main_window()

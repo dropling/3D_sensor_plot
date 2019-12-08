@@ -3,9 +3,9 @@ from matplotlib.figure import Figure
 import time
 
 try:
-    import data_and_plotting.plot_main as mplot
+    import plot_main as mplot
 except ImportError:
-    import windows.data_and_plotting.plot_main as mplot
+    import plot_main as mplot
 
 
 from matplotlib.backends.backend_tkagg import (

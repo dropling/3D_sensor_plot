@@ -8,19 +8,19 @@ from matplotlib.colors import Normalize
 from matplotlib.cm import ScalarMappable
 
 try:
-    from data_management.objects.class_point import Point
+    from class_point import Point
 except ImportError:
-    from .data_management.objects.class_point import Point
+    from .class_point import Point
 
 try:
-    from data_management.objects.class_sensor_handler import Sensor_handler
+    from class_sensor_handler import Sensor_handler
 except ImportError:
-    from .data_management.objects.class_sensor_handler import Sensor_handler
+    from .class_sensor_handler import Sensor_handler
 
 try:
-    from data_management.objects.class_sensor import Sensor
+    from class_sensor import Sensor
 except ImportError:
-    from .data_management.objects.class_sensor import Sensor
+    from .class_sensor import Sensor
 
 # import inspect
 
