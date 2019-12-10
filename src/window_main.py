@@ -3,9 +3,9 @@ from matplotlib.figure import Figure
 import time
 
 try:
-    import plot_main as mplot
+    from class_plotter import Plotter
 except ImportError:
-    import plot_main as mplot
+    from class_plotter import Plotter
 
 
 from matplotlib.backends.backend_tkagg import (
@@ -24,7 +24,7 @@ except ImportError:
 
 class Main_window(tk.Tk):
     def __init__(self):
-        
+        self.plotter = Plotter()
         tk.Tk.__init__(self)
         self.bool_plot = True
         self.create_widgets()
@@ -79,14 +79,14 @@ class Main_window(tk.Tk):
         self.sensor_scatter_na = None
         self.normalize = None
         self.toolbar = NavigationToolbar2Tk(self.canvas, self)
-        self.ax, self.cb, self.normalize = mplot.plot_room(self.fig,self.ax,self.cb)
+        self.ax, self.cb, self.normalize = self.plotter.plot_room(self.fig,self.ax,self.cb)
         self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
         self.toolbar.update()
         self.event_generate("<<event_refresh_canvas>>")
-        self.ax, self.cb, self.sensor_scatter, self.sensor_scatter_na, self.normalize = mplot.plot(self.fig,self.ax,self.cb,self.normalize)
+        self.ax, self.cb, self.sensor_scatter, self.sensor_scatter_na, self.normalize = self.plotter.plot(self.fig,self.ax,self.cb,self.normalize)
         
         while(self.bool_plot):
-            self.ax, self.cb, self.sensor_scatter, self.sensor_scatter_na = mplot.plot_sensor_data_only(self.fig, self.ax, self.cb, self.sensor_scatter, self.sensor_scatter_na, self.normalize)
+            self.ax, self.cb, self.sensor_scatter, self.sensor_scatter_na = self.plotter.plot_sensor_data_only(self.fig, self.ax, self.cb, self.sensor_scatter, self.sensor_scatter_na, self.normalize)
             self.event_generate("<<event_refresh_canvas>>")
         
         # Callback functions
