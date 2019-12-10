@@ -143,7 +143,10 @@ class Plotter():
         self.sensors.add(esp8266_2)
         handler_esp8266_2 = Sensor_handler(esp8266_2)
         self.sensor_handlers.add(handler_esp8266_2)
-        
+    
+    def set_points(self,points):
+        self.points = set(points)
+    
     def plot_sensor_data(self, fig, ax, cb,normalize):
         data = []
         data_not_available = []
