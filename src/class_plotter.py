@@ -32,7 +32,7 @@ class Plotter():
     points = None
     lines = None
     sensors = None
-    file_manager = None
+    file_manager = None # not implemented just yet
     
     def __init__(self):
         self.lines = []
@@ -42,127 +42,147 @@ class Plotter():
 # ============================================================================================================================================================
 # for tests ==================================================================================================================================================
 # ============================================================================================================================================================
-        
-# actual points of the room. Here hardcoded
-# floor corners of my room
-        Raumecke_nord_ost = Point("1",0,0,0)
-        self.points = set([Raumecke_nord_ost])
-        Raumecke_sued_ost = Point("2",3.9,0,0)
-        self.points.add(Raumecke_sued_ost)
-        Raumecke_sued_west = Point("3",3.9,5.4,0)
-        self.points.add(Raumecke_sued_west)
-        Raumecke_nord_west = Point("4",0,5.4,0)
-        self.points.add(Raumecke_nord_west)
-        
-        # 1st level
-        Schraege_nord_ost = Point("5",2.75,0,0.5)
-        self.points.add(Schraege_nord_ost)
-        Schraege_sued_ost = Point("6",3.9,0,0.5)
-        self.points.add(Schraege_sued_ost)
-        Schraege_sued_west = Point("7",3.9,5.4,0.5)
-        self.points.add(Schraege_sued_west)
-        Schraege_nord_west = Point("8",2.75,5.4,0.5)
-        self.points.add(Schraege_nord_west)
-        
-        # 2nd level
-        Decke_nord_ost = Point("9",0,0,2.3)
-        self.points.add(Decke_nord_ost)
-        Decke_nord_west = Point("10",0,5.4,2.3)
-        self.points.add(Decke_nord_west)
-        Decke_nord_ost_zu_dach = Point("11",0,2,2.3)
-        self.points.add(Decke_nord_ost_zu_dach)
-        Decke_nord_west_zu_dach = Point("12",0,3.4,2.3)
-        self.points.add(Decke_nord_west_zu_dach)
-        Decke_sued_ost_zu_dach = Point("13",3.9,2,2.3)
-        self.points.add(Decke_sued_ost_zu_dach)
-        Decke_sued_west_zu_dach = Point("14",3.9,3.4,2.3)
-        self.points.add(Decke_sued_west_zu_dach)
-        
-        # 3rd level
-        Dach_nord = Point("15",0,2.7,3.15)
-        self.points.add(Dach_nord)
-        Dach_sued = Point("16",3.9,2.7,3.15)
-        self.points.add(Dach_sued)
-        
-        # connections
-        # floor to floor
-        Raumecke_nord_ost.adjacent_points_add([Raumecke_sued_ost,Raumecke_nord_west])
-        Raumecke_sued_ost.adjacent_points_add([Raumecke_nord_ost,Raumecke_sued_west])
-        Raumecke_sued_west.adjacent_points_add([Raumecke_nord_west,Raumecke_sued_ost])
-        Raumecke_nord_west.adjacent_points_add([Raumecke_sued_west,Raumecke_nord_ost])
-        
-        # floor to 1st
-        Raumecke_nord_ost.adjacent_points_add([])
-        Raumecke_sued_ost.adjacent_points_add([Schraege_sued_ost])
-        Raumecke_sued_west.adjacent_points_add([Schraege_sued_west])
-        Raumecke_nord_west.adjacent_points_add([])
-        
-        # floor to 2nd
-        Raumecke_nord_ost.adjacent_points_add([Decke_nord_ost])
-        Raumecke_sued_ost.adjacent_points_add([])
-        Raumecke_sued_west.adjacent_points_add([])
-        Raumecke_nord_west.adjacent_points_add([Decke_nord_west])
-        
-        # 1st to 1st
-        Schraege_nord_ost.adjacent_points_add([Schraege_sued_ost])
-        Schraege_sued_ost.adjacent_points_add([Schraege_nord_ost])
-        Schraege_sued_west.adjacent_points_add([Schraege_nord_west])
-        Schraege_nord_west.adjacent_points_add([Schraege_sued_west])
-        
-        # 1st to 2nd & 3rd
-        Schraege_nord_ost.adjacent_points_add([Decke_nord_ost,Decke_nord_ost_zu_dach])
-        Schraege_sued_ost.adjacent_points_add([Decke_sued_ost_zu_dach])
-        Schraege_sued_west.adjacent_points_add([Decke_sued_west_zu_dach])
-        Schraege_nord_west.adjacent_points_add([Decke_nord_west,Decke_nord_west_zu_dach])
-        
-        # 2nd to 2nd
-        Decke_nord_ost.adjacent_points_add([Decke_nord_ost_zu_dach])
-        Decke_nord_west.adjacent_points_add([Decke_nord_west_zu_dach])
-        Decke_nord_ost_zu_dach.adjacent_points_add([Decke_sued_ost_zu_dach,Decke_nord_ost, Decke_nord_west_zu_dach])
-        Decke_nord_west_zu_dach.adjacent_points_add([Decke_sued_west_zu_dach,Decke_nord_west, Decke_nord_ost_zu_dach])
-        Decke_sued_ost_zu_dach.adjacent_points_add([Decke_nord_ost_zu_dach,Decke_sued_west_zu_dach])
-        Decke_sued_west_zu_dach.adjacent_points_add([Decke_nord_west_zu_dach,Decke_sued_ost_zu_dach])
-        
-        
-        
-        # 2nd to 3rd
-        Decke_nord_ost.adjacent_points_add([])
-        Decke_nord_west.adjacent_points_add([])
-        Decke_nord_ost_zu_dach.adjacent_points_add([Dach_nord])
-        Decke_nord_west_zu_dach.adjacent_points_add([Dach_nord])
-        Decke_sued_ost_zu_dach.adjacent_points_add([Dach_sued])
-        Decke_sued_west_zu_dach.adjacent_points_add([Dach_sued])
-        
-        # 3rd to 3rd
-        Dach_nord.adjacent_points_add([Dach_sued])
-        Dach_sued.adjacent_points_add([Dach_nord])
-        
-        
-        
-        # Sensor hardcodes
-        esp8266_1 = Sensor(name = "esp8266_1",x=0.25,y=5.4-1.63,z=0.56)
-        self.sensors.add(esp8266_1)
-        handler_esp8266_1 = Sensor_handler(esp8266_1)
-        self.sensor_handlers.add(handler_esp8266_1)
-        esp8266_2 = Sensor(name = "esp8266_2",x=2.9,y=2.65,z=2.6)
-        self.sensors.add(esp8266_2)
-        handler_esp8266_2 = Sensor_handler(esp8266_2)
-        self.sensor_handlers.add(handler_esp8266_2)
-    
-    def save_points(self, file_name):
-        self.file_manager = File_manager(mode = 'w')
-        self.file_manager.set_file(file_name)
-        self.file_manager.save_points(self.points)
-        
-            
+
+        self.load_points('test_points.json')
+        self.load_sensors('test_sensors.json')
+        self.initialize_sensor_handlers()
+
+## actual points of the room. Here hardcoded
+## floor corners of my room
+#        Raumecke_nord_ost = Point("1",0,0,0)
+#        self.points = set([Raumecke_nord_ost])
+#        Raumecke_sued_ost = Point("2",3.9,0,0)
+#        self.points.add(Raumecke_sued_ost)
+#        Raumecke_sued_west = Point("3",3.9,5.4,0)
+#        self.points.add(Raumecke_sued_west)
+#        Raumecke_nord_west = Point("4",0,5.4,0)
+#        self.points.add(Raumecke_nord_west)
+#        
+#        # 1st level
+#        Schraege_nord_ost = Point("5",2.75,0,0.5)
+#        self.points.add(Schraege_nord_ost)
+#        Schraege_sued_ost = Point("6",3.9,0,0.5)
+#        self.points.add(Schraege_sued_ost)
+#        Schraege_sued_west = Point("7",3.9,5.4,0.5)
+#        self.points.add(Schraege_sued_west)
+#        Schraege_nord_west = Point("8",2.75,5.4,0.5)
+#        self.points.add(Schraege_nord_west)
+#        
+#        # 2nd level
+#        Decke_nord_ost = Point("9",0,0,2.3)
+#        self.points.add(Decke_nord_ost)
+#        Decke_nord_west = Point("10",0,5.4,2.3)
+#        self.points.add(Decke_nord_west)
+#        Decke_nord_ost_zu_dach = Point("11",0,2,2.3)
+#        self.points.add(Decke_nord_ost_zu_dach)
+#        Decke_nord_west_zu_dach = Point("12",0,3.4,2.3)
+#        self.points.add(Decke_nord_west_zu_dach)
+#        Decke_sued_ost_zu_dach = Point("13",3.9,2,2.3)
+#        self.points.add(Decke_sued_ost_zu_dach)
+#        Decke_sued_west_zu_dach = Point("14",3.9,3.4,2.3)
+#        self.points.add(Decke_sued_west_zu_dach)
+#        
+#        # 3rd level
+#        Dach_nord = Point("15",0,2.7,3.15)
+#        self.points.add(Dach_nord)
+#        Dach_sued = Point("16",3.9,2.7,3.15)
+#        self.points.add(Dach_sued)
+#        
+#        # connections
+#        # floor to floor
+#        Raumecke_nord_ost.adjacent_points_add([Raumecke_sued_ost,Raumecke_nord_west])
+#        Raumecke_sued_ost.adjacent_points_add([Raumecke_nord_ost,Raumecke_sued_west])
+#        Raumecke_sued_west.adjacent_points_add([Raumecke_nord_west,Raumecke_sued_ost])
+#        Raumecke_nord_west.adjacent_points_add([Raumecke_sued_west,Raumecke_nord_ost])
+#        
+#        # floor to 1st
+#        Raumecke_nord_ost.adjacent_points_add([])
+#        Raumecke_sued_ost.adjacent_points_add([Schraege_sued_ost])
+#        Raumecke_sued_west.adjacent_points_add([Schraege_sued_west])
+#        Raumecke_nord_west.adjacent_points_add([])
+#        
+#        # floor to 2nd
+#        Raumecke_nord_ost.adjacent_points_add([Decke_nord_ost])
+#        Raumecke_sued_ost.adjacent_points_add([])
+#        Raumecke_sued_west.adjacent_points_add([])
+#        Raumecke_nord_west.adjacent_points_add([Decke_nord_west])
+#        
+#        # 1st to 1st
+#        Schraege_nord_ost.adjacent_points_add([Schraege_sued_ost])
+#        Schraege_sued_ost.adjacent_points_add([Schraege_nord_ost])
+#        Schraege_sued_west.adjacent_points_add([Schraege_nord_west])
+#        Schraege_nord_west.adjacent_points_add([Schraege_sued_west])
+#        
+#        # 1st to 2nd & 3rd
+#        Schraege_nord_ost.adjacent_points_add([Decke_nord_ost,Decke_nord_ost_zu_dach])
+#        Schraege_sued_ost.adjacent_points_add([Decke_sued_ost_zu_dach])
+#        Schraege_sued_west.adjacent_points_add([Decke_sued_west_zu_dach])
+#        Schraege_nord_west.adjacent_points_add([Decke_nord_west,Decke_nord_west_zu_dach])
+#        
+#        # 2nd to 2nd
+#        Decke_nord_ost.adjacent_points_add([Decke_nord_ost_zu_dach])
+#        Decke_nord_west.adjacent_points_add([Decke_nord_west_zu_dach])
+#        Decke_nord_ost_zu_dach.adjacent_points_add([Decke_sued_ost_zu_dach,Decke_nord_ost, Decke_nord_west_zu_dach])
+#        Decke_nord_west_zu_dach.adjacent_points_add([Decke_sued_west_zu_dach,Decke_nord_west, Decke_nord_ost_zu_dach])
+#        Decke_sued_ost_zu_dach.adjacent_points_add([Decke_nord_ost_zu_dach,Decke_sued_west_zu_dach])
+#        Decke_sued_west_zu_dach.adjacent_points_add([Decke_nord_west_zu_dach,Decke_sued_ost_zu_dach])
+#        
+#        
+#        
+#        # 2nd to 3rd
+#        Decke_nord_ost.adjacent_points_add([])
+#        Decke_nord_west.adjacent_points_add([])
+#        Decke_nord_ost_zu_dach.adjacent_points_add([Dach_nord])
+#        Decke_nord_west_zu_dach.adjacent_points_add([Dach_nord])
+#        Decke_sued_ost_zu_dach.adjacent_points_add([Dach_sued])
+#        Decke_sued_west_zu_dach.adjacent_points_add([Dach_sued])
+#        
+#        # 3rd to 3rd
+#        Dach_nord.adjacent_points_add([Dach_sued])
+#        Dach_sued.adjacent_points_add([Dach_nord])
+#        
+#        
+#        
+#        # Sensor hardcodes
+#        esp8266_1 = Sensor(name = "esp8266_1",x=0.25,y=5.4-1.63,z=0.56)
+#        self.sensors.add(esp8266_1)
+#        handler_esp8266_1 = Sensor_handler(esp8266_1)
+#        self.sensor_handlers.add(handler_esp8266_1)
+#        esp8266_2 = Sensor(name = "esp8266_2",x=2.9,y=2.65,z=2.6)
+#        self.sensors.add(esp8266_2)
+#        handler_esp8266_2 = Sensor_handler(esp8266_2)
+#        self.sensor_handlers.add(handler_esp8266_2)
     def set_points(self,points):
         self.points = set(points)
         return True
     
+    def load_points(self, file_name):
+        file_manager = File_manager(mode = 'r')
+        file_manager.set_file(file_name)
+        if(file_manager.load_data()):
+            self.points = set(file_manager.return_points_list())
+        
+    
+    def save_points(self, file_name):
+        file_manager = File_manager(mode = 'w')
+        file_manager.set_file(file_name)
+        file_manager.save_points(self.points)
+        
+    def load_sensors(self, file_name):
+        file_manager = File_manager(mode = 'r')
+        file_manager.set_file(file_name)
+        if(file_manager.load_data()):
+            self.sensors = set(file_manager.return_sensors_list())
+    
     def save_sensors(self, file_name):
-        self.file_manager = File_manager(mode = 'w')
-        self.file_manager.set_file(file_name)
-        self.file_manager.save_sensors(self.sensors)
+        file_manager = File_manager(mode = 'w')
+        file_manager.set_file(file_name)
+        file_manager.save_sensors(self.sensors)
+        
+    def initialize_sensor_handlers(self):
+        self.sensor_handlers = set().copy()
+        for sensor in self.sensors:
+            self.sensor_handlers.add(Sensor_handler(sensor))
     
     def plot_sensor_data(self, fig, ax, cb,normalize):
         data = []
