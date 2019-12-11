@@ -22,12 +22,17 @@ try:
 except ImportError:
     from .class_sensor import Sensor
 
+try:
+    from class_file_manager import File_manager
+except ImportError:
+    from .class_file_manager import File_manager
 
 
 class Plotter():
     points = None
     lines = None
     sensors = None
+    file_manager = None
     
     def __init__(self):
         self.lines = []
@@ -144,8 +149,20 @@ class Plotter():
         handler_esp8266_2 = Sensor_handler(esp8266_2)
         self.sensor_handlers.add(handler_esp8266_2)
     
+    def save_points(self, file_name):
+        self.file_manager = File_manager(mode = 'w')
+        self.file_manager.set_file(file_name)
+        self.file_manager.save_points(self.points)
+        
+            
     def set_points(self,points):
         self.points = set(points)
+        return True
+    
+    def save_sensors(self, file_name):
+        self.file_manager = File_manager(mode = 'w')
+        self.file_manager.set_file(file_name)
+        self.file_manager.save_sensors(self.sensors)
     
     def plot_sensor_data(self, fig, ax, cb,normalize):
         data = []
