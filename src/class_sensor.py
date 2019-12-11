@@ -74,7 +74,7 @@ class Sensor():
                 "coordinates" : self.coordinates,
                 "cal_constant" : self.cal_constant
                 }
-        return json.dumps(object_data_to_json)
+        return object_data_to_json
     
     # Property funcitons
     
