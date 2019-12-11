@@ -107,7 +107,7 @@ class Point():
                 "coordinates" : self.coordinates,
                 "_set_proximity" : list(self._set_proximity)
                 }
-        return json.dumps(object_data_to_json)
+        return object_data_to_json
 
     # Property funcitons
     
