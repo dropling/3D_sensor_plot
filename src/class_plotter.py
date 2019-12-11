@@ -43,9 +43,9 @@ class Plotter():
 # for tests ==================================================================================================================================================
 # ============================================================================================================================================================
 
-        self.load_points('test_points.json')
-        self.load_sensors('test_sensors.json')
-        self.initialize_sensor_handlers()
+#        self.load_points('test_points.json')
+#        self.load_sensors('test_sensors.json')
+#        self.initialize_sensor_handlers()
 
     def set_points(self,points):
         self.points = set(points)
