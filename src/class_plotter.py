@@ -74,6 +74,9 @@ class Plotter():
         file_manager.set_file(file_name)
         file_manager.save_sensors(self.sensors)
         
+    def add_sensor(self, sensor):
+        self.sensors.add(sensor)
+    
     def initialize_sensor_handlers(self):
         self.sensor_handlers = set().copy()
         for sensor in self.sensors:
