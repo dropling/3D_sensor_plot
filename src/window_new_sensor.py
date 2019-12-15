@@ -1,5 +1,5 @@
 import tkinter as tk
-
+from class_sensor import Sensor
 
 
 class New_sensor_window(tk.Toplevel):
@@ -15,33 +15,47 @@ class New_sensor_window(tk.Toplevel):
         self.create_widgets()
         
     def create_widgets(self):
-        sensor_name_label = tk.Label(self, text="Sensor name")
-        sensor_name_label.pack()
-        sensor_name_entry = tk.Entry(self)
-        sensor_name_entry.pack()
+        self.sensor_name_label = tk.Label(self, text="Sensor name")
+        self.sensor_name_label.pack()
+        self.sensor_name_entry = tk.Entry(self)
+        self.sensor_name_entry.pack()
         
-        sensor_position_x_label = tk.Label(self, text="X-Position")
-        sensor_position_x_label.pack()
-        sensor_position_x_entry = tk.Entry(self)
-        sensor_position_x_entry.pack()
+        self.sensor_position_x_label = tk.Label(self, text="X-Position")
+        self.sensor_position_x_label.pack()
+        self.sensor_position_x_entry = tk.Entry(self)
+        self.sensor_position_x_entry.pack()
         
-        sensor_position_y_label = tk.Label(self, text="Y-Position")
-        sensor_position_y_label.pack()
-        sensor_position_y_entry = tk.Entry(self)
-        sensor_position_y_entry.pack()
+        self.sensor_position_y_label = tk.Label(self, text="Y-Position")
+        self.sensor_position_y_label.pack()
+        self.sensor_position_y_entry = tk.Entry(self)
+        self.sensor_position_y_entry.pack()
         
-        sensor_position_z_label = tk.Label(self, text="Z-Position")
-        sensor_position_z_label.pack()
-        sensor_position_z_entry = tk.Entry(self)
-        sensor_position_z_entry.pack()
+        self.sensor_position_z_label = tk.Label(self, text="Z-Position")
+        self.sensor_position_z_label.pack()
+        self.sensor_position_z_entry = tk.Entry(self)
+        self.sensor_position_z_entry.pack()
         
-        sensor_callibration_label = tk.Label(self, text="Callibration constant")
-        sensor_callibration_label.pack()
-        sensor_callibration_entry = tk.Entry(self)
-        sensor_callibration_entry.pack()
+        self.sensor_callibration_label = tk.Label(self, text="Callibration constant")
+        self.sensor_callibration_label.pack()
+        self.sensor_callibration_entry = tk.Entry(self)
+        self.sensor_callibration_entry.pack()
         
-        button = tk.Button(self, text="Save and close", command=lambda: self.save_and_destroy())
-        button.pack()
+        self.button = tk.Button(self, text="Save and close", command=lambda: self.save_and_destroy())
+        self.button.pack()
         
-    def save_and_destroy(window):
-        window.destroy()
+    def save_and_destroy(self):
+        name = self.sensor_name_entry.get()
+        x = self.sensor_position_x_entry.get()
+        y = self.sensor_position_y_entry.get()
+        z = self.sensor_position_z_entry.get()
+        callibration = self.sensor_callibration_entry.get()
+        sensor = None
+        if name and x and y and z:
+            if callibration:
+                sensor = Sensor(name = name, x = x, y = y, z = z, cal_constant = callibration)
+            sensor = Sensor(name = name, x = x, y = y, z = z)
+            print(sensor)
+            self.parent.plotter.add_sensor(sensor)
+            print(self.parent.plotter.sensors)
+            self.parent.plotter.initialize_sensor_handlers()
+        self.destroy()
